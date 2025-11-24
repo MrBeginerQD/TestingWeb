@@ -183,7 +183,7 @@ export default function Home() {
   }
 
   // ==========================================
-  // 📰 صفحه اخبار (طرح جدید: فید تلگرامی)
+  // 📰 صفحه اخبار (اصلاح شده: نمایش کامل عکس)
   // ==========================================
   if (view === "news") return (
     <div className="min-h-screen bg-gray-50 pb-10">
@@ -200,28 +200,24 @@ export default function Home() {
             {news.map((n, i) => (
                 <div key={i} className="bg-white rounded-[24px] shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all">
                     
-                    {/* بخش تصویر (اگر عکس داشته باشد) */}
+                    {/* بخش تصویر (اصلاح شده برای عدم کراپ) */}
                     {n.image && (
-                        <div className="relative h-48 w-full bg-gray-100">
+                        <div className="relative h-56 w-full bg-white border-b border-gray-50">
                             <img 
                                 src={n.image} 
-                                className="w-full h-full object-cover" 
+                                className="w-full h-full object-contain p-4" 
                                 alt={n.title} 
                                 onError={(e) => {e.currentTarget.style.display='none'}} 
                             />
-                            {/* افکت سایه روی عکس */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
                         </div>
                     )}
 
                     {/* بخش متن و محتوا */}
                     <div className="p-5">
-                        {/* دسته‌بندی یا تگ */}
                         <div className="flex items-center justify-between mb-3">
                              <span className="bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-lg">
                                 {n.type || "رویداد"}
                              </span>
-                             {/* آیکون شر (تزئینی) */}
                              <div className="flex gap-1">
                                 <div className="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
                                 <div className="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
@@ -232,11 +228,11 @@ export default function Home() {
                             {n.title}
                         </h3>
                         
+                        {/* متن خبر با رعایت فاصله خطوط */}
                         <p className="text-gray-600 text-sm leading-7 text-justify whitespace-pre-line">
                             {n.summary}
                         </p>
 
-                        {/* فوتر کارت (تاریخ) */}
                         <div className="mt-4 pt-4 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
                             <span>تاریخ انتشار:</span>
                             <span className="font-mono bg-gray-50 px-2 py-1 rounded-md text-gray-500">
@@ -255,7 +251,3 @@ export default function Home() {
         </div>
     </div>
   );
-  
-  // اگر هیچکدام از شرط‌ها برقرار نبود (محض احتیاط)
-  return null;
-}
