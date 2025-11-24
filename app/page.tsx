@@ -182,27 +182,75 @@ export default function Home() {
   }
 
   // ==========================================
-  // 📰 صفحه اخبار (News View)
+  // 📰 صفحه اخبار (طرح جدید: فید تلگرامی)
   // ==========================================
   if (view === "news") return (
-    <div className="min-h-screen bg-white">
-        <div className="p-4 border-b sticky top-0 bg-white/90 backdrop-blur z-20 flex items-center gap-2">
-            <button onClick={() => setView("home")} className="p-2 hover:bg-gray-100 rounded-full"><ArrowLeft size={20}/></button>
-            <h2 className="font-bold text-xl">تابلو اعلانات</h2>
+    <div className="min-h-screen bg-gray-50 pb-10">
+        {/* هدر ثابت بالا */}
+        <div className="bg-white sticky top-0 z-20 px-4 py-3 shadow-sm border-b border-gray-100 flex items-center gap-3">
+            <button onClick={() => setView("home")} className="p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors text-gray-600">
+                <ArrowLeft size={20}/>
+            </button>
+            <h2 className="font-black text-xl text-gray-800">تازه چه خبر؟ 📣</h2>
         </div>
-        <div className="p-4 space-y-6">
+
+        {/* لیست خبرها */}
+        <div className="max-w-md mx-auto p-4 space-y-6">
             {news.map((n, i) => (
-                <div key={i} className="relative pl-4 border-r-2 border-orange-300">
-                    <div className="absolute -right-[5px] top-0 w-2 h-2 bg-orange-500 rounded-full"></div>
-                    <span className="text-xs font-mono text-gray-400 block mb-1">{n.date}</span>
-                    <h3 className="font-bold text-lg text-gray-800 mb-2">{n.title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{n.summary}</p>
+                <div key={i} className="bg-white rounded-[24px] shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all">
+                    
+                    {/* بخش تصویر (اگر عکس داشته باشد) */}
                     {n.image && (
-                        <img src={n.image} className="mt-3 rounded-xl w-full h-40 object-cover" alt="news" />
+                        <div className="relative h-48 w-full bg-gray-100">
+                            <img 
+                                src={n.image} 
+                                className="w-full h-full object-cover" 
+                                alt={n.title} 
+                                onError={(e) => {e.currentTarget.style.display='none'}} // اگر لینک خراب بود عکس رو نشون نده
+                            />
+                            {/* افکت سایه روی عکس */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                        </div>
                     )}
+
+                    {/* بخش متن و محتوا */}
+                    <div className="p-5">
+                        {/* دسته‌بندی یا تگ (اختیاری - اگر نداری ثابت نوشتم) */}
+                        <div className="flex items-center justify-between mb-3">
+                             <span className="bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-lg">
+                                {n.type || "رویداد"}
+                             </span>
+                             {/* آیکون شر (تزئینی) */}
+                             <div className="flex gap-1">
+                                <div className="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+                                <div className="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+                             </div>
+                        </div>
+
+                        <h3 className="text-lg font-black text-gray-800 mb-2 leading-tight">
+                            {n.title}
+                        </h3>
+                        
+                        <p className="text-gray-600 text-sm leading-7 text-justify whitespace-pre-line">
+                            {n.summary}
+                        </p>
+
+                        {/* فوتر کارت (تاریخ) */}
+                        <div className="mt-4 pt-4 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
+                            <span>تاریخ انتشار:</span>
+                            <span className="font-mono bg-gray-50 px-2 py-1 rounded-md text-gray-500">
+                                {n.date} 📅
+                            </span>
+                        </div>
+                    </div>
                 </div>
             ))}
+
+            {news.length === 0 && (
+                <div className="text-center py-20 text-gray-400">
+                    <p>هنوز خبری منتشر نشده است...</p>
+                </div>
+            )}
         </div>
     </div>
   );
-}
