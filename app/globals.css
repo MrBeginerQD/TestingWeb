@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap');
+
+:root { --background: #fdfbf7; --foreground: #1c1917; }
+body {
+  font-family: 'Vazirmatn', sans-serif;
+  direction: rtl;
+  background: var(--background);
+  color: var(--foreground);
+}
+.bento-grid { display: grid; gap: 1rem; padding: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(3, 1fr); } .hero { grid-column: span 3; } .main { grid-column: span 2; } }
+.card { @apply bg-white rounded-2xl p-6 shadow-sm border border-stone-200 transition-all; }
