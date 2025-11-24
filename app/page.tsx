@@ -30,12 +30,10 @@ export default function Home() {
   );
 
   // ==========================================
-  // 🏡 صفحه اصلی (طرح مدرن و شیشه‌ای)
+  // 🏡 صفحه اصلی
   // ==========================================
   if (view === "home") return (
     <div className="min-h-screen bg-[#F2F4F3] pb-10">
-      
-      {/* 1. هدر بزرگ با تصویر پس‌زمینه */}
       <div className="relative h-[280px] bg-emerald-900 rounded-b-[40px] shadow-xl overflow-hidden">
         <img 
             src="/header.jpg" 
@@ -53,10 +51,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 2. شبکه‌ی Bento (منوهای اصلی) */}
       <div className="px-5 -mt-8 relative z-20 grid grid-cols-2 gap-4">
-        
-        {/* دکمه بزرگ کشاورزان */}
         <div 
             onClick={() => setView("farmers")}
             className="col-span-2 bg-white rounded-3xl p-5 shadow-lg border border-emerald-100 flex items-center justify-between cursor-pointer active:scale-95 transition-all group"
@@ -75,7 +70,6 @@ export default function Home() {
             </div>
         </div>
 
-        {/* دکمه اخبار */}
         <div onClick={() => setView("news")} className="bg-white rounded-3xl p-4 shadow-md border border-gray-100 flex flex-col justify-between h-36 cursor-pointer active:scale-95 transition-all">
             <div className="w-10 h-10 bg-orange-100 text-orange-500 rounded-xl flex items-center justify-center">
                 <Newspaper size={20} />
@@ -86,7 +80,6 @@ export default function Home() {
             </div>
         </div>
 
-        {/* دکمه درباره ما */}
         <div className="bg-emerald-800 rounded-3xl p-4 shadow-md flex flex-col justify-between h-36 cursor-pointer active:scale-95 transition-all relative overflow-hidden">
             <div className="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
             <div className="w-10 h-10 bg-white/20 text-white rounded-xl flex items-center justify-center backdrop-blur-sm">
@@ -98,20 +91,17 @@ export default function Home() {
             </div>
         </div>
       </div>
-
       <p className="text-center text-gray-400 text-xs mt-8">نسخه ۱.۰.۰</p>
     </div>
   );
 
   // ==========================================
-  // 🚜 صفحه لیست کشاورزان (List View)
+  // 🚜 صفحه لیست کشاورزان
   // ==========================================
   if (view === "farmers") {
     const filtered = farmers.filter(f => f.name?.includes(search) || f.product?.includes(search));
-    
     return (
       <div className="min-h-screen bg-gray-50">
-        {/* هدر چسبان */}
         <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 py-4 shadow-sm">
             <div className="flex items-center gap-3 mb-4">
                 <button onClick={() => setView("home")} className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
@@ -119,11 +109,10 @@ export default function Home() {
                 </button>
                 <h2 className="text-xl font-bold text-gray-800">لیست فروشندگان</h2>
             </div>
-            {/* سرچ باکس */}
             <div className="relative">
                 <input 
                     type="text" 
-                    placeholder="جستجوی نام یا محصول (مثلا: گردو)..." 
+                    placeholder="جستجوی نام یا محصول..." 
                     className="w-full bg-gray-100 text-gray-800 rounded-xl py-3 pr-10 pl-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
                     onChange={(e) => setSearch(e.target.value)}
                 />
@@ -131,11 +120,9 @@ export default function Home() {
             </div>
         </div>
 
-        {/* لیست کارت‌ها */}
         <div className="p-4 space-y-4 pb-20">
             {filtered.map((f, i) => (
                 <div key={i} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex gap-4 transition-all hover:shadow-md">
-                    {/* تصویر پروفایل */}
                     <div className="w-20 h-20 rounded-xl bg-gray-200 overflow-hidden shrink-0 border border-gray-100">
                         {f.image ? (
                             <img src={f.image} className="w-full h-full object-cover" alt={f.name} />
@@ -145,8 +132,6 @@ export default function Home() {
                             </div>
                         )}
                     </div>
-
-                    {/* اطلاعات */}
                     <div className="flex-1 flex flex-col justify-between">
                         <div>
                             <div className="flex justify-between items-start">
@@ -158,7 +143,6 @@ export default function Home() {
                                 <span>{f.product}</span>
                             </div>
                         </div>
-                        
                         <div className="flex items-end justify-between mt-2">
                             <div className="flex items-center gap-1 text-xs text-gray-400">
                                 <MapPin size={12} />
@@ -171,23 +155,17 @@ export default function Home() {
                     </div>
                 </div>
             ))}
-            
-            {filtered.length === 0 && (
-                <div className="text-center py-10 text-gray-400">
-                    <p>نتیجه‌ای یافت نشد :(</p>
-                </div>
-            )}
+            {filtered.length === 0 && <div className="text-center py-10 text-gray-400"><p>نتیجه‌ای یافت نشد :(</p></div>}
         </div>
       </div>
     );
   }
 
   // ==========================================
-  // 📰 صفحه اخبار (اصلاح شده: نمایش کامل عکس)
+  // 📰 صفحه اخبار (فید جذاب و اصلاح شده)
   // ==========================================
   if (view === "news") return (
     <div className="min-h-screen bg-gray-50 pb-10">
-        {/* هدر ثابت بالا */}
         <div className="bg-white sticky top-0 z-20 px-4 py-3 shadow-sm border-b border-gray-100 flex items-center gap-3">
             <button onClick={() => setView("home")} className="p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors text-gray-600">
                 <ArrowLeft size={20}/>
@@ -195,12 +173,11 @@ export default function Home() {
             <h2 className="font-black text-xl text-gray-800">تازه چه خبر؟ 📣</h2>
         </div>
 
-        {/* لیست خبرها */}
         <div className="max-w-md mx-auto p-4 space-y-6">
             {news.map((n, i) => (
                 <div key={i} className="bg-white rounded-[24px] shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all">
                     
-                    {/* بخش تصویر (اصلاح شده برای عدم کراپ) */}
+                    {/* بخش عکس (کامل نشان داده می‌شود) */}
                     {n.image && (
                         <div className="relative h-56 w-full bg-white border-b border-gray-50">
                             <img 
@@ -212,7 +189,6 @@ export default function Home() {
                         </div>
                     )}
 
-                    {/* بخش متن و محتوا */}
                     <div className="p-5">
                         <div className="flex items-center justify-between mb-3">
                              <span className="bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-lg">
@@ -228,7 +204,6 @@ export default function Home() {
                             {n.title}
                         </h3>
                         
-                        {/* متن خبر با رعایت فاصله خطوط */}
                         <p className="text-gray-600 text-sm leading-7 text-justify whitespace-pre-line">
                             {n.summary}
                         </p>
@@ -242,12 +217,10 @@ export default function Home() {
                     </div>
                 </div>
             ))}
-
-            {news.length === 0 && (
-                <div className="text-center py-20 text-gray-400">
-                    <p>هنوز خبری منتشر نشده است...</p>
-                </div>
-            )}
+            {news.length === 0 && <div className="text-center py-20 text-gray-400"><p>هنوز خبری منتشر نشده است...</p></div>}
         </div>
     </div>
   );
+
+  return null; // پایان تابع اصلی
+}
