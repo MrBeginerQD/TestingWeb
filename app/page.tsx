@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Papa from "papaparse";
 import { Phone, MapPin, Sprout, Search, ArrowLeft, Newspaper, ChefHat, Store, ChevronRight } from "lucide-react";
 
-// --- تنظیمات دیتابیس (لینک‌های شما) ---
+// --- تنظیمات دیتابیس ---
 const DATA_URLS = {
   FARMERS: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRh9jMd7TSWcY3RVRqFFiDszo8UUVaxUvAZjSzkuxF7-OxhffqmgKrXoeTyntQRE23bZI5th77mLrlS/pub?gid=0&single=true&output=csv",
   NEWS: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRh9jMd7TSWcY3RVRqFFiDszo8UUVaxUvAZjSzkuxF7-OxhffqmgKrXoeTyntQRE23bZI5th77mLrlS/pub?gid=1909136888&single=true&output=csv"
@@ -21,9 +21,9 @@ export default function Home() {
     Papa.parse(DATA_URLS.NEWS, { download: true, header: true, complete: (res) => setNews(res.data) });
   }, []);
 
-  // --- کامپوننت لودینگ ---
+  // --- لودینگ ---
   if (loading) return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-emerald-50 text-emerald-800">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-emerald-50 dark:bg-slate-950 text-emerald-800 dark:text-emerald-400">
       <Sprout className="w-12 h-12 animate-bounce mb-4" />
       <p className="font-bold animate-pulse">در حال ورود به روستا...</p>
     </div>
@@ -33,7 +33,9 @@ export default function Home() {
   // 🏡 صفحه اصلی
   // ==========================================
   if (view === "home") return (
-    <div className="min-h-screen bg-[#F2F4F3] pb-10">
+    <div className="min-h-screen bg-[#F2F4F3] dark:bg-slate-950 pb-10 transition-colors duration-300">
+      
+      {/* هدر */}
       <div className="relative h-[280px] bg-emerald-900 rounded-b-[40px] shadow-xl overflow-hidden">
         <img 
             src="/header.jpg" 
@@ -51,36 +53,41 @@ export default function Home() {
         </div>
       </div>
 
+      {/* منوی Bento */}
       <div className="px-5 -mt-8 relative z-20 grid grid-cols-2 gap-4">
+        
+        {/* دکمه کشاورزان */}
         <div 
             onClick={() => setView("farmers")}
-            className="col-span-2 bg-white rounded-3xl p-5 shadow-lg border border-emerald-100 flex items-center justify-between cursor-pointer active:scale-95 transition-all group"
+            className="col-span-2 bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-lg border border-emerald-100 dark:border-slate-800 flex items-center justify-between cursor-pointer active:scale-95 transition-all group"
         >
             <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center shadow-inner group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                <div className="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center shadow-inner group-hover:bg-emerald-600 group-hover:text-white transition-colors">
                     <Store size={28} />
                 </div>
                 <div>
-                    <h2 className="text-xl font-bold text-gray-800">غرفه‌ها</h2>
+                    <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">غرفه‌ها</h2>
                     <p className="text-xs text-gray-400 mt-1">{farmers.length} فروشنده فعال</p>
                 </div>
             </div>
-            <div className="w-8 h-8 bg-gray-50 rounded-full flex items-center justify-center text-gray-400">
+            <div className="w-8 h-8 bg-gray-50 dark:bg-slate-800 rounded-full flex items-center justify-center text-gray-400">
                 <ChevronRight size={20} />
             </div>
         </div>
 
-        <div onClick={() => setView("news")} className="bg-white rounded-3xl p-4 shadow-md border border-gray-100 flex flex-col justify-between h-36 cursor-pointer active:scale-95 transition-all">
-            <div className="w-10 h-10 bg-orange-100 text-orange-500 rounded-xl flex items-center justify-center">
+        {/* دکمه اخبار */}
+        <div onClick={() => setView("news")} className="bg-white dark:bg-slate-900 rounded-3xl p-4 shadow-md border border-gray-100 dark:border-slate-800 flex flex-col justify-between h-36 cursor-pointer active:scale-95 transition-all">
+            <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 text-orange-500 rounded-xl flex items-center justify-center">
                 <Newspaper size={20} />
             </div>
             <div>
-                <h3 className="font-bold text-gray-700">اخبار روستا</h3>
+                <h3 className="font-bold text-gray-700 dark:text-gray-200">اخبار روستا</h3>
                 <p className="text-[10px] text-gray-400 mt-1 line-clamp-1">{news[0]?.title || "..."}</p>
             </div>
         </div>
 
-        <div className="bg-emerald-800 rounded-3xl p-4 shadow-md flex flex-col justify-between h-36 cursor-pointer active:scale-95 transition-all relative overflow-hidden">
+        {/* دکمه درباره ما */}
+        <div className="bg-emerald-800 dark:bg-emerald-900 rounded-3xl p-4 shadow-md flex flex-col justify-between h-36 cursor-pointer active:scale-95 transition-all relative overflow-hidden">
             <div className="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
             <div className="w-10 h-10 bg-white/20 text-white rounded-xl flex items-center justify-center backdrop-blur-sm">
                 <ChefHat size={20} />
@@ -91,7 +98,8 @@ export default function Home() {
             </div>
         </div>
       </div>
-      <p className="text-center text-gray-400 text-xs mt-8">نسخه ۱.۰.۰</p>
+
+      <p className="text-center text-gray-400 dark:text-slate-600 text-xs mt-8">نسخه ۱.۱.۰</p>
     </div>
   );
 
@@ -100,34 +108,35 @@ export default function Home() {
   // ==========================================
   if (view === "farmers") {
     const filtered = farmers.filter(f => f.name?.includes(search) || f.product?.includes(search));
+    
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 py-4 shadow-sm">
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-950 transition-colors duration-300">
+        <div className="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-gray-200 dark:border-slate-800 px-4 py-4 shadow-sm">
             <div className="flex items-center gap-3 mb-4">
-                <button onClick={() => setView("home")} className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
-                    <ArrowLeft size={20} className="text-gray-600"/>
+                <button onClick={() => setView("home")} className="p-2 bg-gray-100 dark:bg-slate-800 rounded-full hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+                    <ArrowLeft size={20} className="text-gray-600 dark:text-gray-300"/>
                 </button>
-                <h2 className="text-xl font-bold text-gray-800">لیست فروشندگان</h2>
+                <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">لیست فروشندگان</h2>
             </div>
             <div className="relative">
                 <input 
                     type="text" 
-                    placeholder="جستجوی نام یا محصول..." 
-                    className="w-full bg-gray-100 text-gray-800 rounded-xl py-3 pr-10 pl-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                    placeholder="جستجو..." 
+                    className="w-full bg-gray-100 dark:bg-slate-800 dark:text-white text-gray-800 rounded-xl py-3 pr-10 pl-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all placeholder:text-gray-400 dark:placeholder:text-slate-500"
                     onChange={(e) => setSearch(e.target.value)}
                 />
-                <Search className="absolute right-3 top-3 text-gray-400 w-5 h-5" />
+                <Search className="absolute right-3 top-3 text-gray-400 dark:text-slate-500 w-5 h-5" />
             </div>
         </div>
 
         <div className="p-4 space-y-4 pb-20">
             {filtered.map((f, i) => (
-                <div key={i} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex gap-4 transition-all hover:shadow-md">
-                    <div className="w-20 h-20 rounded-xl bg-gray-200 overflow-hidden shrink-0 border border-gray-100">
+                <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-slate-800 flex gap-4 transition-all hover:shadow-md">
+                    <div className="w-20 h-20 rounded-xl bg-gray-200 dark:bg-slate-800 overflow-hidden shrink-0 border border-gray-100 dark:border-slate-700">
                         {f.image ? (
                             <img src={f.image} className="w-full h-full object-cover" alt={f.name} />
                         ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-emerald-50 text-emerald-300">
+                            <div className="w-full h-full flex items-center justify-center bg-emerald-50 dark:bg-emerald-900/20 text-emerald-300 dark:text-emerald-700">
                                 <Store size={32} />
                             </div>
                         )}
@@ -135,20 +144,20 @@ export default function Home() {
                     <div className="flex-1 flex flex-col justify-between">
                         <div>
                             <div className="flex justify-between items-start">
-                                <h3 className="font-bold text-gray-800">{f.name}</h3>
-                                {f.category && <span className="text-[10px] px-2 py-1 bg-gray-100 rounded-md text-gray-500">{f.category}</span>}
+                                <h3 className="font-bold text-gray-800 dark:text-gray-100">{f.name}</h3>
+                                {f.category && <span className="text-[10px] px-2 py-1 bg-gray-100 dark:bg-slate-800 rounded-md text-gray-500 dark:text-gray-400">{f.category}</span>}
                             </div>
-                            <div className="flex items-center gap-1 mt-1 text-emerald-600 font-medium text-sm">
+                            <div className="flex items-center gap-1 mt-1 text-emerald-600 dark:text-emerald-400 font-medium text-sm">
                                 <Sprout size={14} />
                                 <span>{f.product}</span>
                             </div>
                         </div>
                         <div className="flex items-end justify-between mt-2">
-                            <div className="flex items-center gap-1 text-xs text-gray-400">
+                            <div className="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
                                 <MapPin size={12} />
                                 <span className="truncate max-w-[100px]">{f.location}</span>
                             </div>
-                            <a href={`tel:${f.phone}`} className="bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow-emerald-200 shadow-lg hover:bg-emerald-700 transition-colors flex items-center gap-2">
+                            <a href={`tel:${f.phone}`} className="bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow-emerald-200 dark:shadow-none hover:bg-emerald-700 transition-colors flex items-center gap-2">
                                 <Phone size={14} /> تماس
                             </a>
                         </div>
@@ -162,24 +171,24 @@ export default function Home() {
   }
 
   // ==========================================
-  // 📰 صفحه اخبار (فید جذاب و اصلاح شده)
+  // 📰 صفحه اخبار
   // ==========================================
   if (view === "news") return (
-    <div className="min-h-screen bg-gray-50 pb-10">
-        <div className="bg-white sticky top-0 z-20 px-4 py-3 shadow-sm border-b border-gray-100 flex items-center gap-3">
-            <button onClick={() => setView("home")} className="p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors text-gray-600">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 pb-10 transition-colors duration-300">
+        <div className="bg-white dark:bg-slate-900 sticky top-0 z-20 px-4 py-3 shadow-sm border-b border-gray-100 dark:border-slate-800 flex items-center gap-3">
+            <button onClick={() => setView("home")} className="p-2 bg-gray-50 dark:bg-slate-800 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors text-gray-600 dark:text-gray-300">
                 <ArrowLeft size={20}/>
             </button>
-            <h2 className="font-black text-xl text-gray-800">تازه چه خبر؟ 📣</h2>
+            <h2 className="font-black text-xl text-gray-800 dark:text-gray-100">تازه چه خبر؟ 📣</h2>
         </div>
 
         <div className="max-w-md mx-auto p-4 space-y-6">
             {news.map((n, i) => (
-                <div key={i} className="bg-white rounded-[24px] shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all">
+                <div key={i} className="bg-white dark:bg-slate-900 rounded-[24px] shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden hover:shadow-md transition-all">
                     
-                    {/* بخش عکس (کامل نشان داده می‌شود) */}
                     {n.image && (
-                        <div className="relative h-56 w-full bg-white border-b border-gray-50">
+                        <div className="relative h-56 w-full bg-white dark:bg-white border-b border-gray-50 dark:border-slate-800">
+                             {/* نکته: پس‌زمینه عکس را سفید گذاشتم بماند تا لوگوها در دارک مود گم نشوند */}
                             <img 
                                 src={n.image} 
                                 className="w-full h-full object-contain p-4" 
@@ -191,26 +200,26 @@ export default function Home() {
 
                     <div className="p-5">
                         <div className="flex items-center justify-between mb-3">
-                             <span className="bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-lg">
+                             <span className="bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 text-[10px] font-bold px-2 py-1 rounded-lg">
                                 {n.type || "رویداد"}
                              </span>
                              <div className="flex gap-1">
-                                <div className="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
-                                <div className="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+                                <div className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-slate-700"></div>
+                                <div className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-slate-700"></div>
                              </div>
                         </div>
 
-                        <h3 className="text-lg font-black text-gray-800 mb-2 leading-tight">
+                        <h3 className="text-lg font-black text-gray-800 dark:text-gray-100 mb-2 leading-tight">
                             {n.title}
                         </h3>
                         
-                        <p className="text-gray-600 text-sm leading-7 text-justify whitespace-pre-line">
+                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-7 text-justify whitespace-pre-line">
                             {n.summary}
                         </p>
 
-                        <div className="mt-4 pt-4 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
+                        <div className="mt-4 pt-4 border-t border-gray-50 dark:border-slate-800 flex items-center justify-between text-xs text-gray-400">
                             <span>تاریخ انتشار:</span>
-                            <span className="font-mono bg-gray-50 px-2 py-1 rounded-md text-gray-500">
+                            <span className="font-mono bg-gray-50 dark:bg-slate-800 px-2 py-1 rounded-md text-gray-500 dark:text-gray-400">
                                 {n.date} 📅
                             </span>
                         </div>
@@ -222,5 +231,5 @@ export default function Home() {
     </div>
   );
 
-  return null; // پایان تابع اصلی
+  return null;
 }
