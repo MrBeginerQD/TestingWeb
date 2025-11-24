@@ -38,7 +38,7 @@ export default function Home() {
       {/* 1. هدر بزرگ با تصویر پس‌زمینه */}
       <div className="relative h-[280px] bg-emerald-900 rounded-b-[40px] shadow-xl overflow-hidden">
         <img 
-            src="https://images.unsplash.com/photo-1595231776515-ddffb1f4eb73?q=80&w=1000&auto=format&fit=crop" 
+            src="/header.jpg" 
             className="absolute inset-0 w-full h-full object-cover opacity-60"
             alt="header"
         />
