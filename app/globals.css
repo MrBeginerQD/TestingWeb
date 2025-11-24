@@ -2,41 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-/* لود کردن فونت وزیر */
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;300;400;500;700;900&display=swap');
 
 :root {
   --background: #fdfbf7;
   --foreground: #1c1917;
-  --primary: #15803d; /* سبز زمردی */
+}
+
+/* وقتی تم سیستم کاربر تاریک است */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a; /* رنگ سرمه‌ای خیلی تیره (Slate 900) */
+    --foreground: #f1f5f9; /* رنگ سفید یخی */
+  }
 }
 
 body {
   font-family: 'Vazirmatn', sans-serif;
   direction: rtl;
   color: var(--foreground);
-  /* پترن نقطه‌ای محو برای پس‌زمینه */
-  background-color: #f8fafc;
+  background-color: var(--background);
+  /* پترن نقطه‌ای */
   background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
-/* استایل مخصوص اسکرول‌بار (که زشت نباشه) */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 10px;
+/* تغییر رنگ نقاط پترن در حالت دارک */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-image: radial-gradient(#1e293b 1px, transparent 1px);
+  }
 }
 
-/* افکت شیشه‌ای برای پایین موبایل */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
 .glass-nav {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+/* حالت شیشه‌ای مخصوص دارک مود */
+@media (prefers-color-scheme: dark) {
+  .glass-nav {
+    background: rgba(15, 23, 42, 0.8); /* تیره شفاف */
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
 }
