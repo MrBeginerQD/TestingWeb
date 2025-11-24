@@ -1,15 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap');
 
-:root { --background: #fdfbf7; --foreground: #1c1917; }
+/* لود کردن فونت وزیر */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;300;400;500;700;900&display=swap');
+
+:root {
+  --background: #fdfbf7;
+  --foreground: #1c1917;
+  --primary: #15803d; /* سبز زمردی */
+}
+
 body {
   font-family: 'Vazirmatn', sans-serif;
   direction: rtl;
-  background: var(--background);
   color: var(--foreground);
+  /* پترن نقطه‌ای محو برای پس‌زمینه */
+  background-color: #f8fafc;
+  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+  background-size: 20px 20px;
 }
-.bento-grid { display: grid; gap: 1rem; padding: 1rem; grid-template-columns: 1fr; }
-@media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(3, 1fr); } .hero { grid-column: span 3; } .main { grid-column: span 2; } }
-.card { @apply bg-white rounded-2xl p-6 shadow-sm border border-stone-200 transition-all; }
+
+/* استایل مخصوص اسکرول‌بار (که زشت نباشه) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+/* افکت شیشه‌ای برای پایین موبایل */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
