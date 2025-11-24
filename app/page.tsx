@@ -39,6 +39,7 @@ export default function Home() {
       <div className="relative h-[280px] bg-emerald-900 rounded-b-[40px] shadow-xl overflow-hidden">
         <img 
             src="/header.jpg" 
+            onError={(e) => {e.currentTarget.src = "https://images.unsplash.com/photo-1595231776515-ddffb1f4eb73?q=80&w=1000&auto=format&fit=crop"}}
             className="absolute inset-0 w-full h-full object-cover opacity-60"
             alt="header"
         />
@@ -206,7 +207,7 @@ export default function Home() {
                                 src={n.image} 
                                 className="w-full h-full object-cover" 
                                 alt={n.title} 
-                                onError={(e) => {e.currentTarget.style.display='none'}} // اگر لینک خراب بود عکس رو نشون نده
+                                onError={(e) => {e.currentTarget.style.display='none'}} 
                             />
                             {/* افکت سایه روی عکس */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
@@ -215,7 +216,7 @@ export default function Home() {
 
                     {/* بخش متن و محتوا */}
                     <div className="p-5">
-                        {/* دسته‌بندی یا تگ (اختیاری - اگر نداری ثابت نوشتم) */}
+                        {/* دسته‌بندی یا تگ */}
                         <div className="flex items-center justify-between mb-3">
                              <span className="bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-lg">
                                 {n.type || "رویداد"}
@@ -254,3 +255,7 @@ export default function Home() {
         </div>
     </div>
   );
+  
+  // اگر هیچکدام از شرط‌ها برقرار نبود (محض احتیاط)
+  return null;
+}
